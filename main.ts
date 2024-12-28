@@ -90,7 +90,8 @@ namespace rsa {
     //%publicKey.shadow=variables_get publicKey.defl=myRsaPublicKey
     //%group="encoding and decoding"
     //%weight=10
-    export function encrypt(message: string, publicKey: [number,number] ): number[] {
+    export function encrypt(message: string, publicKey: number[] ): number[] {
+        if (publicKey.length !== 2) return [];
         const [e, n] = publicKey;
         return message.split('').map(char => {
             const m = char.charCodeAt(0);
@@ -106,7 +107,8 @@ namespace rsa {
     //%privateKey.shadow=variables_get privateKey.defl=myRsaPrivateKey
     //%group="encoding and decoding"
     //%weight=8
-    export function decrypt(cipher: number[], privateKey: [number, number]): string {
+    export function decrypt(cipher: number[], privateKey: number[]): string {
+        if (privateKey.length !== 2) return "";
         const [d, n] = privateKey;
         return cipher.map(c => {
             const m = modExp(c, d, n);
