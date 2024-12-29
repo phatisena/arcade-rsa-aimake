@@ -87,16 +87,16 @@ namespace rsa {
      */
     //%blockid=rsa_keyandencode
     //%block="get $message to encode with publicKey: $publicKey"
-    //%publicKey.shadow=variables_get publicKey.defl="myRsaPublicKey"
+    //%publicKey.shadow=variables_get publicKey.defl=myRsaPublicKey
     //%group="encoding and decoding"
     //%weight=10
-    export function encrypt(message: string, publicKey: number[] ): string {
-        if (publicKey.length !== 2) return "";
+    export function encrypt(message: string, publicKey: number[] ): number[] {
+        if (publicKey.length !== 2) return [];
         const [e, n] = publicKey;
-        return message.split("").map(char => {
+        return message.split('').map(char => {
             const m = char.charCodeAt(0);
-            return String.fromCharCode(modExp(m, e, n));
-        }).join("");
+            return modExp(m, e, n);
+        });
     }
 
     /**
@@ -104,17 +104,16 @@ namespace rsa {
      */
     //%blockid=rsa_keyanddecode
     //%block="get $cipher to decode with privateKey: $privateKey"
-    //%privateKey.shadow=variables_get privateKey.defl="myRsaPrivateKey"
+    //%privateKey.shadow=variables_get privateKey.defl=myRsaPrivateKey
     //%group="encoding and decoding"
     //%weight=8
-    export function decrypt(cipher: string, privateKey: number[]): string {
+    export function decrypt(cipher: number[], privateKey: number[]): string {
         if (privateKey.length !== 2) return "";
         const [d, n] = privateKey;
-        return cipher.split("").map(char => {
-            const c = char.charCodeAt(0)
+        return cipher.map(c => {
             const m = modExp(c, d, n);
             return String.fromCharCode(m);
-        }).join("");
+        }).join('');
     }
 
     /**
