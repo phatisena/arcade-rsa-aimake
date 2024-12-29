@@ -39,12 +39,14 @@ namespace rsa {
      * Generate RSA keys (public and private).
      */
     //%blockid=rsa_genkey
-    //%block="generate rsa as dual key"
+    //%block="generate rsa as dual key|| with primelevel $primelevel"
+    //%primelevel.defl=100
     //%blockSetVariable="myRsaKey"
     //%group="key id"
     //%weight=8
-    export function generateKeys(): {publicKey: [number,number],privateKey: [number,number]} {
-        const primes = generatePrimes(100);
+    export function generateKeys(primelevel: number): {publicKey: [number,number],privateKey: [number,number]} {
+        primelevel = primelevel | 100
+        const primes = generatePrimes(primelevel);
         const p = primes[Math.floor(Math.random() * primes.length)];
         const q = primes[Math.floor(Math.random() * primes.length)];
 
@@ -87,7 +89,7 @@ namespace rsa {
      */
     //%blockid=rsa_keyandencode
     //%block="get $message to encode with publicKey: $publicKey"
-    //%publicKey.shadow=variables_get publicKey.defl=myRsaPublicKey
+    //%publicKey.shadow=variables_get publicKey.defl="myRsaPublicKey"
     //%group="encoding and decoding"
     //%weight=10
     export function encrypt(message: string, publicKey: number[] ): number[] {
@@ -104,7 +106,7 @@ namespace rsa {
      */
     //%blockid=rsa_keyanddecode
     //%block="get $cipher to decode with privateKey: $privateKey"
-    //%privateKey.shadow=variables_get privateKey.defl=myRsaPrivateKey
+    //%privateKey.shadow=variables_get privateKey.defl="myRsaPrivateKey"
     //%group="encoding and decoding"
     //%weight=8
     export function decrypt(cipher: number[], privateKey: number[]): string {
