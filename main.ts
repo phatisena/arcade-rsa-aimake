@@ -44,8 +44,7 @@ namespace rsa {
     //%blockSetVariable="myRsaKey"
     //%group="key id"
     //%weight=8
-    export function generateKeys(primelevel: number): {publicKey: [number,number],privateKey: [number,number]} {
-        primelevel = primelevel | 100
+    export function generateKeys(primelevel: number = 100): {publicKey: [number,number],privateKey: [number,number]} {
         const primes = generatePrimes(primelevel);
         const p = primes[Math.floor(Math.random() * primes.length)];
         const q = primes[Math.floor(Math.random() * primes.length)];
