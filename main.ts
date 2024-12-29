@@ -91,13 +91,13 @@ namespace rsa {
     //%publicKey.shadow=variables_get publicKey.defl="myRsaPublicKey"
     //%group="encoding and decoding"
     //%weight=10
-    export function encrypt(message: string, publicKey: number[] ): number[] {
-        if (publicKey.length !== 2) return [];
+    export function encrypt(message: string, publicKey: number[] ): string {
+        if (publicKey.length !== 2) return "";
         const [e, n] = publicKey;
         return message.split('').map(char => {
             const m = char.charCodeAt(0);
-            return modExp(m, e, n);
-        });
+            return String.fromCharCode(modExp(m, e, n));
+        }).join("");
     }
 
     /**
@@ -108,13 +108,14 @@ namespace rsa {
     //%privateKey.shadow=variables_get privateKey.defl="myRsaPrivateKey"
     //%group="encoding and decoding"
     //%weight=8
-    export function decrypt(cipher: number[], privateKey: number[]): string {
+    export function decrypt(cipher: string, privateKey: number[]): string {
         if (privateKey.length !== 2) return "";
         const [d, n] = privateKey;
-        return cipher.map(c => {
+        return cipher.split("").map(char => {
+            const c = char.charCodeAt(0)
             const m = modExp(c, d, n);
             return String.fromCharCode(m);
-        }).join('');
+        }).join("");
     }
 
     /**
