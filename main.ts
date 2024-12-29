@@ -5,10 +5,6 @@ namespace rsa {
     /**
      * Generate prime numbers within a range.
      */
-    //%blockid=rsa_primegen
-    //%block="generate prime number array"
-    //%group="key id"
-    //%weight=10
     export function generatePrimes(limit: number): number[] {
         const primes: number[] = [];
         for (let i = 2; i <= limit; i++) {
@@ -42,7 +38,7 @@ namespace rsa {
     //%block="generate rsa as dual key|| with primelevel $primelevel"
     //%primelevel.defl=100
     //%blockSetVariable="myRsaKey"
-    //%group="key id"
+    //%group="rsa key"
     //%weight=8
     export function generateKeys(primelevel: number = 100): {publicKey: [number,number],privateKey: [number,number]} {
         const primes = generatePrimes(primelevel);
@@ -62,7 +58,7 @@ namespace rsa {
             d++;
         }
 
-        if (n < 100) return generateKeys(primelevel);
+        if (n < 128) return generateKeys(primelevel);
 
         return {publicKey: [e, n],privateKey: [d, n]};
     }
@@ -72,7 +68,7 @@ namespace rsa {
     //%blockid=rsa_getkeyintype
     //%block="get $idkv from rsa key in $keyMode"
     //%idkv.shadow=variables_get idkv.defl="myRsaKey"
-    //%group="key id"
+    //%group="rsa key"
     //%weight=6
     export function getRsaKey(idkv: {publicKey: [number,number], privateKey: [number,number]}, keyMode:keyType) {
         switch (keyMode) {
