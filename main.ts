@@ -62,6 +62,8 @@ namespace rsa {
             d++;
         }
 
+        if (n < 100) return generateKeys(primelevel);
+
         return {publicKey: [e, n],privateKey: [d, n]};
     }
 
