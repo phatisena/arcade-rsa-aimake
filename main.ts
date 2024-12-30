@@ -38,7 +38,7 @@ namespace rsa {
     //%block="generate rsa as dual key|| with primelevel $primelevel"
     //%primelevel.defl=100
     //%blockSetVariable="myRsaKey"
-    //%group="rsa key"
+    //%group="key id"
     //%weight=8
     export function generateKeys(primelevel: number = 100): {publicKey: [number,number],privateKey: [number,number]} {
         const primes = generatePrimes(primelevel);
@@ -71,7 +71,7 @@ namespace rsa {
     //%blockid=rsa_getkeyintype
     //%block="get $idkv from rsa key in $keyMode"
     //%idkv.shadow=variables_get idkv.defl="myRsaKey"
-    //%group="rsa key"
+    //%group="key id"
     //%weight=6
     export function getRsaKey(idkv: {publicKey: [number,number], privateKey: [number,number]}, keyMode:keyType) {
         switch (keyMode) {
