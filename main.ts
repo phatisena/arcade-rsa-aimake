@@ -65,6 +65,9 @@ namespace rsa {
 
     export enum keyType {publicKey = 1,privateKey = 2}
 
+    /**
+     * get rsa key and pick key by public key or private key
+     */
     //%blockid=rsa_getkeyintype
     //%block="get $idkv from rsa key in $keyMode"
     //%idkv.shadow=variables_get idkv.defl="myRsaKey"
